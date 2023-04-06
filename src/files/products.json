@@ -1,0 +1,29 @@
+[
+	{
+		"title": "Pepsi",
+		"price": 375,
+		"stock": 7,
+		"thumbnail": "Sin imagen",
+		"description": "Liquido Black",
+		"code": 220,
+		"id": "1"
+	},
+	{
+		"title": "7up",
+		"price": 1000,
+		"stock": 10,
+		"thumbnail": "Sin imagen",
+		"description": "Suero regenerativo",
+		"code": 221,
+		"id": "2"
+	},
+	{
+		"title": "Pepsi Max",
+		"price": 300,
+		"stock": 2,
+		"thumbnail": "Sin imagen",
+		"description": "Liquido Black",
+		"code": 222,
+		"id": "3"
+	}
+]
