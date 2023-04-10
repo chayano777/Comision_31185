@@ -27,9 +27,7 @@ export default class ProductManager {
 
         const products = await this.getProducts();
                 
-        const product = products.filter( e => e.id === id)
-
-        console.log(product);
+        const product = products.filter( e => e.id === parseInt(id))
 
         return product;
     }
@@ -86,20 +84,22 @@ export default class ProductManager {
         }
     }*/
 
-    updateProduct = async (id, title, price, stock, thumbnail, description, code) => {
+    updateProduct = async (id, title, price, stock, thumbnail, description, status, category, code) => {
         
         const products = await this.getProducts();
 
-        let indexUser = products.findIndex((e)=>{
+        let indexProduct = products.findIndex((e)=>{
             return e.id === id;
         })
 
-        products[indexUser].title = title;
-        products[indexUser].price = price;
-        products[indexUser].stock = stock;
-        products[indexUser].thumbnail = thumbnail;
-        products[indexUser].description = description;
-        products[indexUser].code = code;
+        products[indexProduct].title = title;
+        products[indexProduct].price = price;
+        products[indexProduct].stock = stock;
+        products[indexProduct].thumbnail = thumbnail;
+        products[indexProduct].description = description;
+        products[indexProduct].status=status;
+        products[indexProduct].category=category;
+        products[indexProduct].code = code;
 
         try {
 
