@@ -11,9 +11,9 @@
 		"id": 1
 	},
 	{
-		"title": "7up",
-		"price": 1000,
-		"stock": 10,
+		"title": "7up Light",
+		"price": 900,
+		"stock": 50,
 		"thumbnail": "Sin imagen",
 		"description": "Suero regenerativo",
 		"status": "true",
@@ -22,14 +22,14 @@
 		"id": 2
 	},
 	{
-		"title": "Pepsi Max",
-		"price": 300,
-		"stock": 2,
+		"title": "7up",
+		"price": 750,
+		"stock": 5,
 		"thumbnail": "Sin imagen",
-		"description": "Liquido Black",
+		"description": "Suero regenerativo",
 		"status": "true",
 		"category": "gaseosa",
-		"code": 222,
+		"code": 221,
 		"id": 3
 	},
 	{
@@ -45,7 +45,7 @@
 	},
 	{
 		"title": "Mirinda",
-		"price": 720,
+		"price": 1000,
 		"stock": 20,
 		"thumbnail": "Sin imagen",
 		"description": "sabor puro",
