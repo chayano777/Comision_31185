@@ -84,7 +84,7 @@ export default class ProductManager {
         }
     }*/
 
-    updateProduct = async (id, title, price, stock, thumbnail, description, status, category, code) => {
+    /*updateProduct = async (id, title, price, stock, thumbnail, description, status, category, code) => {
         //console.log(`------------------> ${title}`)
         const products = await this.getProducts();
 
@@ -110,6 +110,33 @@ export default class ProductManager {
 
         } catch (error) {
             return error;
+        }
+    }*/
+
+    updateProduct = async (id_prod, update_prod) => {
+        
+        const products = await this.getProducts();
+
+        const id = parseInt(id_prod);
+        
+        const index_prod = products.findIndex(e => e.id === id);
+        
+        if(index_prod === -1){
+            return 'No Existe el producto'
+        }
+
+        update_prod.id = id;
+
+        
+
+        products[index_prod] = {...products[index_prod], ...update_prod};
+
+        try {
+            await fs.promises.writeFile(this.path, JSON.stringify(products,null,'\t'))
+            return "Producto modificado"
+
+        } catch (error) {
+            console.log(error);
         }
     }
 

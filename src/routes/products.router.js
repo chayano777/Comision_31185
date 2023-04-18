@@ -38,21 +38,19 @@ router.post('/', async (req, res)=>{
 })
 
 router.put('/:pid', async (req, res)=>{
-    const {id, title, price, stock, thumbnail, description, status, category, code} = req.body;
+    
+    const reqProduct = req.body;
+    
+    const id = req.params.pid;
 
-   if(!title || !price || !stock || !description || !category || !code) {
-       
-       res.send({
-            status: "No realizado",
-            msg: "Faltan datos"
-       });
-       
-       return
-   }
+   const updateProduct = await manager.updateProduct(id, reqProduct);
 
-   const mensaje = await manager.updateProduct(id, title, price, stock, thumbnail, description, status, category, code);
-   res.send(mensaje);
-})
+
+
+   return res.send({
+        updateProduct
+   });
+});
 
 router.delete('/:pid', async (req, res)=>{
     const id = req.body.id;
