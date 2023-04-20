@@ -1,0 +1,19 @@
+<div class="container">
+  <h1 class="text-center">Productos</h1>
+  <hr />
+
+  <div class="row col-4">
+    {{#each products}}
+
+      <ul class="list-group mb-5"> 
+        <li class="list-group-item"><h3>{{this.title}}</h3></li>
+        <li class="list-group-item">Codigo: {{this.code}}</li>
+        <li class="list-group-item">Precio: ${{this.price}}</li> 
+        <li class="list-group-item">Descripcion: {{this.description}}</li> 
+      </ul>
+
+    {{/each}}
+
+  </div>
+
+</div>
