@@ -39,7 +39,9 @@ socketServer.on('connection', async socket=>{
         console.log('Esto viene desde el cliente: ' + data);
     })*/
     
-    socketServer.emit('log', products);
+    socket.emit('log', products);
+ 
+    console.log('PASE POR ACA ******************************************************')
 
     socket.on('add_product', async data =>{
         await manager.addProduct(data);

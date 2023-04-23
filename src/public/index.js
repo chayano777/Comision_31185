@@ -10,8 +10,10 @@ const code = document.querySelector('#code')
 const agregar = document.querySelector('#agregar')
 const borrar = document.querySelector('#borrar')
 const idProd = document.querySelector('#idProd')
+const hijo = document.querySelector('#hijo')
 
-socket.on('log', products=>{
+socket.on('log', products => {
+    nodo.removeChild(hijo)
     products.forEach(e => {
         nodo.innerHTML += `
             <ul id="{{this.id}}" class="list-group mb-5"> 
@@ -23,6 +25,7 @@ socket.on('log', products=>{
             </ul>
         `
     });
+});
 
 agregar.addEventListener('click', ()=>{
     socket.emit('add_product', {
@@ -40,9 +43,6 @@ borrar.addEventListener('click', ()=>{
         idProd: idProd.value
     })
 })
-    
-
-});
 
 
                         
