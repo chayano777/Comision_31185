@@ -5,7 +5,7 @@ import __dirname from './utils.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
-
+import ProductManager from './managers/productManager.js';
 
 const PORT = '8080';
 const app = express();
@@ -13,6 +13,7 @@ const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
 });
 
+const manager = new ProductManager();
 const socketServer = new Server(server);
 
 app.engine('handlebars', handlebars.engine());
@@ -29,12 +30,25 @@ app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
 
-socketServer.on('connection', socket=>{
-    console.log("Esta funcionando")
 
-    socket.on('mensaje', data => {
-        console.log(data)
+socketServer.on('connection', async socket=>{
+    console.log("Conectado")
+    const products = await manager.getProducts();
+
+    /*socket.on('mensaje', data => {
+        console.log('Esto viene desde el cliente: ' + data);
+    })*/
+    
+    socketServer.emit('log', products);
+
+    socket.on('add_product', async data =>{
+        await manager.addProduct(data);
     })
+
+    socket.on('del_product', async data =>{
+        await manager.deleteProduct(data);
+    })
+
 })
 
 

@@ -2,18 +2,18 @@
   <h1 class="text-center">Productos</h1>
   <hr />
 
-  <div class="row col-4">
-    {{#each products}}
+    <div class="row col-4">
+      {{#each products}}
+        <ul id="{{this.id}}" class="list-group mb-5"> 
+          <li class="list-group-item"><h3>{{this.title}}</h3></li>
+          <li class="list-group-item">ID: {{this.id}}</li>
+          <li class="list-group-item">Codigo: {{this.code}}</li>
+          <li class="list-group-item">Precio: ${{this.price}}</li> 
+          <li class="list-group-item">Descripcion: {{this.description}}</li> 
+        </ul>
 
-      <ul class="list-group mb-5"> 
-        <li class="list-group-item"><h3>{{this.title}}</h3></li>
-        <li class="list-group-item">Codigo: {{this.code}}</li>
-        <li class="list-group-item">Precio: ${{this.price}}</li> 
-        <li class="list-group-item">Descripcion: {{this.description}}</li> 
-      </ul>
+      {{/each}}
 
-    {{/each}}
-
-  </div>
+    </div>
 
 </div>
