@@ -147,7 +147,7 @@ export default class ProductManager {
         const products = await this.getProducts();
         
         let indexProduct = products.findIndex((e)=>{
-            return e.id === id;
+            return e.id === parseInt(id);
         })
 
         products.splice(indexProduct, 1);

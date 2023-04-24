@@ -37,7 +37,8 @@ agregar.addEventListener('click', ()=>{
         price: price.value,
         stock: stock.value,
         thumbnail: thumbnail.value,
-        description: category.value,
+        description: description.value,
+        category: category.value,
         code: code.value
     });
 });

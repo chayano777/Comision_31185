@@ -15,13 +15,17 @@
                         <input type="text" id="title" name="titulo" placeholder="Nombre Producto" required>
                         <br>
                         <br>
-                        <input type="number" id="price" name="precio" placeholder="Precio" required>
+                        <input type="number" id="price" name="precio" placeholder="Precio" min="0" required>
                         <br>
                         <br>  
-                        <input type="number" id="stock" name="stock" placeholder="Stock" required>
+                        <input type="number" id="stock" name="stock" placeholder="Stock" min="0" required>
                         <br>
                         <br>
                         <input type="text" id="thumbnail" name="thumb" placeholder="Aca se carga la foto">
+                        <br>
+                        <br>
+                        <label for="estado" class="">Estado:</label>
+                        <input id="status" type="checkbox" name="estado">
                         <br>
                         <br>
                         <input type="text" id="description" name="descripcion" placeholder="Descripcion">
