@@ -9,21 +9,25 @@ const category = document.querySelector('#category')
 const code = document.querySelector('#code')
 const agregar = document.querySelector('#agregar')
 const borrar = document.querySelector('#borrar')
-const idProd = document.querySelector('#idProd')
+const idProd = document.querySelector('#id')
 const hijo = document.querySelector('#hijo')
+const form = document.querySelector('#primeForm')
 
 socket.on('log', products => {
-    nodo.removeChild(hijo)
+    
+    let hijo = '';
+
     products.forEach(e => {
-        nodo.innerHTML += `
-            <ul id="{{this.id}}" class="list-group mb-5"> 
+        hijo += `
+            <ul id="${e.id}" class="list-group mb-5"> 
                 <li class="list-group-item">ID: ${e.id}</li>
                 <li class="list-group-item"><h3>${e.title}</h3></li>
                 <li class="list-group-item">Codigo: ${e.code}</li>
                 <li class="list-group-item">Precio: $ ${e.price}</li> 
                 <li class="list-group-item">Descripcion: ${e.description}</li> 
             </ul>
-        `
+        `;
+        nodo.innerHTML = hijo;
     });
 });
 
@@ -38,9 +42,11 @@ agregar.addEventListener('click', ()=>{
     });
 });
 
+
+
 borrar.addEventListener('click', ()=>{
     socket.emit('del_product', {
-        idProd: idProd.value
+        id: idProd.value
     })
 })
 

@@ -12,13 +12,13 @@
             <div class="row">
                 <h2 class="mt-5 mb-5">Carga de productos</h2>
                     <form id="primeForm">
-                        <input type="text" id="title" name="titulo" placeholder="Nombre Producto">
+                        <input type="text" id="title" name="titulo" placeholder="Nombre Producto" required>
                         <br>
                         <br>
-                        <input type="text" id="price" name="precio" placeholder="Precio">
+                        <input type="number" id="price" name="precio" placeholder="Precio" required>
                         <br>
                         <br>  
-                        <input type="text" id="stock" name="stock" placeholder="Stock">
+                        <input type="number" id="stock" name="stock" placeholder="Stock" required>
                         <br>
                         <br>
                         <input type="text" id="thumbnail" name="thumb" placeholder="Aca se carga la foto">
@@ -27,10 +27,10 @@
                         <input type="text" id="description" name="descripcion" placeholder="Descripcion">
                         <br>
                         <br>
-                        <input type="text" id="category" name="categoria" placeholder="Categoria">
+                        <input type="text" id="category" name="categoria" placeholder="Categoria" required>
                         <br>
                         <br>
-                        <input type="text" id="code" name="code" maxlength="3" placeholder="Codigo de producto">
+                        <input type="number" id="code" name="code" maxlength="3" placeholder="Codigo de producto" required>
                         <br>
                         <br>
                         <button id="agregar" class="btn btn-success">Enviar</button>
@@ -41,7 +41,7 @@
             <div class="row">
                 <h2 class="mt-5 mb-5">Borrar producto</h2>
                 <form id="secondForm">
-                    <input id="idProd" type="text" name="idProd" placeholder="Ingrese el ID"><br><br>
+                    <input id="id" type="number" name="id" placeholder="Ingrese el ID"><br><br>
                     <button id="borrar" class="btn btn-danger ">Borrar</button>
                 </form>
             </div>

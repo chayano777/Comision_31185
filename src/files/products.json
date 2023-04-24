@@ -9,5 +9,16 @@
 		"category": "gaseosa",
 		"code": 220,
 		"id": 1
+	},
+	{
+		"title": "7up L",
+		"price": 1500,
+		"stock": 25,
+		"thumbnail": "sin imagen",
+		"description": "suero regenerativo",
+		"status": "true",
+		"category": "gaseosa",
+		"code": 221,
+		"id": 2
 	}
 ]

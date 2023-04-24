@@ -33,13 +33,15 @@ export default class ProductManager {
     }
 
     addProduct = async (product=this.validateField()) =>{
-        
+     
         let products = await this.getProducts();
         
-        let id = products[products.length -1 ].id;
-
-        product.id = ++id;
-    
+        if(products.length === 0 ){
+            product.id = 1;
+            product.status = true;
+        } else {
+            product.id = products[products.length -1 ].id + 1;
+        }
 
         let numCode = products.find((e) => e.code === product.code);
 
@@ -141,9 +143,9 @@ export default class ProductManager {
     }
 
     deleteProduct = async (id) =>{
-        
+
         const products = await this.getProducts();
- 
+        
         let indexProduct = products.findIndex((e)=>{
             return e.id === id;
         })

@@ -33,22 +33,24 @@ app.use('/', viewsRouter);
 
 socketServer.on('connection', async socket=>{
     console.log("Conectado")
+    
     const products = await manager.getProducts();
+    socket.emit('log', products);
 
     /*socket.on('mensaje', data => {
         console.log('Esto viene desde el cliente: ' + data);
     })*/
     
-    socket.emit('log', products);
- 
-    console.log('PASE POR ACA ******************************************************')
-
     socket.on('add_product', async data =>{
         await manager.addProduct(data);
+        const products = await manager.getProducts();
+        socketServer.emit('log', products);
     })
 
     socket.on('del_product', async data =>{
-        await manager.deleteProduct(data);
+        await manager.deleteProduct(data.id);
+        const products = await manager.getProducts();
+        socketServer.emit('log', products);
     })
 
 })
