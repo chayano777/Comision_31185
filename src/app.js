@@ -48,7 +48,9 @@ socketServer.on('connection', async socket=>{
     })
 
     socket.on('del_product', async data =>{
-        await manager.deleteProduct(data.id);
+        const op_del = await manager.deleteProduct(data.id);
+        console.log(op_del) //traigo el objeto bandera
+        
         const products = await manager.getProducts();
         socketServer.emit('log', products);
     })
