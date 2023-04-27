@@ -46,6 +46,7 @@ agregar.addEventListener('click', ()=>{
 
 
 borrar.addEventListener('click', ()=>{
+    
     socket.emit('del_product', {
         id: idProd.value
     })

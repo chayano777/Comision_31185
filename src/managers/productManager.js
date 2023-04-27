@@ -1,3 +1,4 @@
+import { error } from 'console';
 import fs from 'fs';
 
 
@@ -150,12 +151,18 @@ export default class ProductManager {
             return e.id === parseInt(id);
         })
 
+        if(indexProduct===-1){
+            return {
+                existe: false
+            }
+        }
+
         products.splice(indexProduct, 1);
 
         try {
             
             await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
-            return 'Producto eliminado!!!'
+            return products[id]
 
 
         } catch (error) {
