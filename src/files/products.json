@@ -9,38 +9,5 @@
 		"category": "gaseosa",
 		"code": 220,
 		"id": 1
-	},
-	{
-		"title": "Pepsi",
-		"price": 375,
-		"stock": 7,
-		"thumbnail": "Sin imagen",
-		"description": "Liquido Black",
-		"status": "true",
-		"category": "gaseosa",
-		"code": 220,
-		"id": 2
-	},
-	{
-		"title": "Pepsi",
-		"price": 375,
-		"stock": 7,
-		"thumbnail": "Sin imagen",
-		"description": "Liquido Black",
-		"status": "true",
-		"category": "gaseosa",
-		"code": 220,
-		"id": 3
-	},
-	{
-		"title": "Pepsi",
-		"price": 375,
-		"stock": 7,
-		"thumbnail": "Sin imagen",
-		"description": "Liquido Black",
-		"status": "true",
-		"category": "gaseosa",
-		"code": 220,
-		"id": 4
 	}
 ]

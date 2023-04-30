@@ -7,7 +7,7 @@ import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
 import ProductManager from './managers/productManager.js';
 
-const PORT = '8080';
+const PORT = 8080;
 const app = express();
 const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
@@ -45,14 +45,17 @@ socketServer.on('connection', async socket=>{
         await manager.addProduct(data);
         const products = await manager.getProducts();
         socketServer.emit('log', products);
+        socketServer.emit('alerta', {status: 'exito'})
     })
-
+    
     socket.on('del_product', async data =>{
         const op_del = await manager.deleteProduct(data.id);
-        console.log(op_del) //traigo el objeto bandera
-        
-        const products = await manager.getProducts();
-        socketServer.emit('log', products);
+        if(op_del.existe === false){
+            socketServer.emit('alerta', 'noexiste')
+        } else {
+            const products = await manager.getProducts();
+            socketServer.emit('log', products);
+        }
     })
 
 })

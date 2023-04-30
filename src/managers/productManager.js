@@ -159,11 +159,9 @@ export default class ProductManager {
 
         products.splice(indexProduct, 1);
 
-        try {
-            
-            await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
+        try {      
+            await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'), 'utf-8')
             return products[id]
-
 
         } catch (error) {
             console.log(error);
