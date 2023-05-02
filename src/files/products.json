@@ -9,5 +9,49 @@
 		"category": "gaseosa",
 		"code": 220,
 		"id": 1
+	},
+	{
+		"title": "7up L",
+		"price": 1500,
+		"stock": 25,
+		"thumbnail": "sin imagen",
+		"description": "suero regenerativo",
+		"status": "true",
+		"category": "gaseosa",
+		"code": 221,
+		"id": 2
+	},
+	{
+		"title": "7up",
+		"price": 750,
+		"stock": 5,
+		"thumbnail": "Sin imagen",
+		"description": "Suero regenerativo",
+		"status": "true",
+		"category": "gaseosa",
+		"code": 221,
+		"id": 3
+	},
+	{
+		"title": "7up L",
+		"price": 1500,
+		"stock": 25,
+		"thumbnail": "sin imagen",
+		"description": "suero regenerativo",
+		"status": "true",
+		"category": "gaseosa",
+		"code": 221,
+		"id": 4
+	},
+	{
+		"title": "Mirinda",
+		"price": 1000,
+		"stock": 20,
+		"thumbnail": "Sin imagen",
+		"description": "sabor puro",
+		"status": "true",
+		"category": "gaseosa",
+		"code": 225,
+		"id": 5
 	}
 ]
