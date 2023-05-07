@@ -1,6 +1,7 @@
 import express from 'express';
 import { Server } from 'socket.io';
 import handlebars from "express-handlebars";
+import mongoose from 'mongoose';
 import __dirname from './utils.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
@@ -11,6 +12,14 @@ const PORT = 8080;
 const app = express();
 const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
+});
+
+
+mongoose.connect('mongodb+srv://marianoeiro:mariano.database.2023@cluster0.ubyswjq.mongodb.net/?retryWrites=true&w=majority',(error)=>{
+    if(error){
+        console.log("No se pudo conectar a la DB "+error);
+        process.exit();
+    }
 });
 
 const manager = new ProductManager();
