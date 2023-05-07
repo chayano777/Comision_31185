@@ -1,8 +1,19 @@
 import { Router } from "express";
 import ProductManager from "../managers/productManager.js"
+import { productModel } from "../models/product.model.js";
 
 const router = Router();
 const manager = new ProductManager();
+
+/*router.get('/', async (req, res)=>{
+    try {
+        let products = await productModel.find()
+        res.send({result:"success",payload:products})
+    } catch (error) {
+        console.log("No se pudo obtener los productos "+error)
+    }
+});*/ 
+
 
 router.get('/', async (req, res)=>{
     const products = await manager.getProducts();

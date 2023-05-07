@@ -33,13 +33,15 @@ export default class ProductManager {
     }
 
     addProduct = async (product=this.validateField()) =>{
-        
+     
         let products = await this.getProducts();
         
-        let id = products[products.length -1 ].id;
-
-        product.id = ++id;
-    
+        if(products.length === 0 ){
+            product.id = 1;
+            product.status = true;
+        } else {
+            product.id = products[products.length -1 ].id + 1;
+        }
 
         let numCode = products.find((e) => e.code === product.code);
 
@@ -141,20 +143,24 @@ export default class ProductManager {
     }
 
     deleteProduct = async (id) =>{
-        
+
         const products = await this.getProducts();
- 
+        
         let indexProduct = products.findIndex((e)=>{
-            return e.id === id;
+            return e.id === parseInt(id);
         })
+
+        if(indexProduct===-1){
+            return {
+                existe: false
+            }
+        }
 
         products.splice(indexProduct, 1);
 
-        try {
-            
-            await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
-            return 'Producto eliminado!!!'
-
+        try {      
+            await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'), 'utf-8')
+            return products[id]
 
         } catch (error) {
             console.log(error);
