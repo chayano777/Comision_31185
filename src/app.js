@@ -6,7 +6,7 @@ import __dirname from './utils.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
-import ProductManager from './managers/productManager.js';
+//import ProductManager from './managers/productManager.js';
 
 const PORT = 8080;
 const app = express();

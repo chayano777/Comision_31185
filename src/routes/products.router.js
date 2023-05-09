@@ -1,51 +1,31 @@
 import { Router } from "express";
-import ProductManager from "../managers/productManager.js"
-import { productModel } from "../models/product.model.js";
+import ProductManagerDao from "../Dao/porductManagerDao";
+
 
 const router = Router();
-const manager = new ProductManager();
-
-/*router.get('/', async (req, res)=>{
-    try {
-        let products = await productModel.find()
-        res.send({result:"success",payload:products})
-    } catch (error) {
-        console.log("No se pudo obtener los productos "+error)
-    }
-});*/ 
-
+const manager = new ProductManagerDao();
 
 router.get('/', async (req, res)=>{
-    const products = await manager.getProducts();
+    const products = await manager.getProducts;
 
-    let limit = req.query.limit;
-
-    if(!limit) return res.send({products});
-    let productsLimit = products.slice(0,limit);
-    res.send({productsLimit});
+    res.send({products});
 })
 
-router.get('/:pid', async (req, res)=>{
-    let pid = req.params.pid;
+router.get('/:id', async (req, res)=>{
+    let pid = req.params.id;
 
     let product = await manager.getProductById(pid);
         res.send({product}); 
 })
 
 router.post('/', async (req, res)=>{
-    const {title, price, stock, thumbnail, description, status="true", category, code} = req.body;
 
-    if(!title || !price || !stock || !description || !code || !status || !category || status==="false") {
-        res.send('Faltan datos');
-        return
-    }
-
-    const product = {
-        title, price, stock, thumbnail, description, status, category, code
-    }
-
-    const mensaje = await manager.addProduct(product);
-    res.send(mensaje);
+    const reqProduct = req.body;
+    const product = await manager.addProduct(reqProduct);
+    res.send({
+        status: Success,
+        product
+    });
 })
 
 router.put('/:pid', async (req, res)=>{
