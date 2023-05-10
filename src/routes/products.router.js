@@ -1,20 +1,20 @@
 import { Router } from "express";
-import ProductManagerDao from "../Dao/porductManagerDao";
+import ProductManagerDao from "../Dao/productManagerDao.js";
 
 
 const router = Router();
 const manager = new ProductManagerDao();
 
 router.get('/', async (req, res)=>{
-    const products = await manager.getProducts;
+    const products = await manager.getProducts();
 
     res.send({products});
 })
 
-router.get('/:id', async (req, res)=>{
-    let pid = req.params.id;
+router.get('/:pid', async (req, res)=>{
+    let id = req.params.pid;
 
-    let product = await manager.getProductById(pid);
+    let product = await manager.getProductById(id);
         res.send({product}); 
 })
 
@@ -44,7 +44,7 @@ router.put('/:pid', async (req, res)=>{
 });
 
 router.delete('/:pid', async (req, res)=>{
-    const id = req.body.id;
+    const id = req.body.pid;
 
     await manager.deleteProduct(id)
 

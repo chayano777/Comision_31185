@@ -6,6 +6,7 @@ import __dirname from './utils.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
+import ProductManagerDao from './Dao/productManagerDao.js';
 //import ProductManager from './managers/productManager.js';
 
 const PORT = 8080;
@@ -14,16 +15,11 @@ const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
 });
 
+const MONGO = 'mongodb+srv://marianoeiro:mariano.database.2023@cluster0.ubyswjq.mongodb.net/?retryWrites=true&w=majority';
+const connection = mongoose.connect(MONGO)
 
-mongoose.connect('mongodb+srv://marianoeiro:mariano.database.2023@cluster0.ubyswjq.mongodb.net/?retryWrites=true&w=majority',(error)=>{
-    if(error){
-        console.log("No se pudo conectar a la DB "+error);
-        process.exit();
-    }
-});
-
-const manager = new ProductManager();
-const socketServer = new Server(server);
+const manager = new ProductManagerDao();
+const io = new Server(server);
 
 app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname + '/views');
@@ -40,7 +36,7 @@ app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
 
 
-socketServer.on('connection', async socket=>{
+io.on('connection', async socket=>{
     console.log("Conectado")
     
     const products = await manager.getProducts();
@@ -53,17 +49,17 @@ socketServer.on('connection', async socket=>{
     socket.on('add_product', async data =>{
         await manager.addProduct(data);
         const products = await manager.getProducts();
-        socketServer.emit('log', products);
-        socketServer.emit('alerta', {status: 'exito'})
+        io.emit('log', products);
+        io.emit('alerta', {status: 'exito'})
     })
     
     socket.on('del_product', async data =>{
         const op_del = await manager.deleteProduct(data.id);
         if(op_del.existe === false){
-            socketServer.emit('alerta', 'noexiste')
+            io.emit('alerta', 'noexiste')
         } else {
             const products = await manager.getProducts();
-            socketServer.emit('log', products);
+            io.emit('log', products);
         }
     })
 
