@@ -6,7 +6,6 @@ const schema = new mongoose.Schema({
     pid: {
         type: Number,
         require: true,
-        unique: true
     },
 
     title: {

@@ -6,7 +6,7 @@ export default class ProductManagerDao{
 
     getProducts = async () =>{
         try {
-            const products = await productModel.find();
+            const products = await productModel.find().lean();
             return products;
         } catch (error) {
             console.log(error);
@@ -42,12 +42,12 @@ export default class ProductManagerDao{
             stock,
             category,
             thumbnail,
-            status: status || true
+            status: status  
         }
 
         const products = await this.getProducts(); 
         if(products.length === 0 ){
-            newProduct.id = 1;
+            newProduct.pid = 1;
         } else {
             newProduct.pid = products[products.length -1 ].pid + 1;
         }

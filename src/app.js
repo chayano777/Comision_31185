@@ -15,7 +15,7 @@ const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
 });
 
-const MONGO = 'mongodb+srv://marianoeiro:mariano.database.2023@cluster0.ubyswjq.mongodb.net/?retryWrites=true&w=majority';
+const MONGO = 'mongodb+srv://marianoeiro:mariano.database.2023@ecommerce.ubyswjq.mongodb.net/?retryWrites=true&w=majority';
 const connection = mongoose.connect(MONGO)
 
 const manager = new ProductManagerDao();
@@ -54,7 +54,7 @@ io.on('connection', async socket=>{
     })
     
     socket.on('del_product', async data =>{
-        const op_del = await manager.deleteProduct(data.id);
+        const op_del = await manager.deleteProduct(data.pid);
         if(op_del.existe === false){
             io.emit('alerta', 'noexiste')
         } else {
