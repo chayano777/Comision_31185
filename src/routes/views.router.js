@@ -21,6 +21,10 @@ router.get('/realTimeProducts', (req, res)=>{
     res.render('realTimeProducts',{})
 })
 
+router.get('/chat', (req, res)=>{
+    res.render('chat', {});
+})
+
 
 
 

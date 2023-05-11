@@ -7,6 +7,7 @@ import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
 import ProductManagerDao from './Dao/productManagerDao.js';
+import MessageManagerDao from './Dao/chatManagerDao.js';
 //import ProductManager from './managers/productManager.js';
 
 const PORT = 8080;
@@ -18,7 +19,11 @@ const server = app.listen(PORT, ()=>{
 const MONGO = 'mongodb+srv://marianoeiro:mariano.database.2023@ecommerce.ubyswjq.mongodb.net/?retryWrites=true&w=majority';
 const connection = mongoose.connect(MONGO)
 
-const manager = new ProductManagerDao();
+
+const msgChat = [];
+
+const managerProduct = new ProductManagerDao();
+const managerMessage = new MessageManagerDao();
 const io = new Server(server);
 
 app.engine('handlebars', handlebars.engine());
@@ -39,7 +44,7 @@ app.use('/', viewsRouter);
 io.on('connection', async socket=>{
     console.log("Conectado")
     
-    const products = await manager.getProducts();
+    const products = await managerProduct.getProducts();
     socket.emit('log', products);
 
     /*socket.on('mensaje', data => {
@@ -47,20 +52,26 @@ io.on('connection', async socket=>{
     })*/
     
     socket.on('add_product', async data =>{
-        await manager.addProduct(data);
-        const products = await manager.getProducts();
+        await managerProduct.addProduct(data);
+        const products = await managerProduct.getProducts();
         io.emit('log', products);
         io.emit('alerta', {status: 'exito'})
     })
     
     socket.on('del_product', async data =>{
-        const op_del = await manager.deleteProduct(data.pid);
+        const op_del = await managerProduct.deleteProduct(data.pid);
         if(op_del.existe === false){
             io.emit('alerta', 'noexiste')
         } else {
-            const products = await manager.getProducts();
+            const products = await managerProduct.getProducts();
             io.emit('log', products);
         }
+    })
+
+    socket.on('chat', async data => {
+        const result = await managerMessage.createMessage(data);
+        msgChat.push(result);
+        io.emit('chat', msgChat);
     })
 
 })
