@@ -1,15 +1,14 @@
 <div class="container m-5 py-5">
-     <div class="col-12">
+     <div class="col-6">
         <h1>Web Socket</h1>
-        <div class="back scroll pb-5" style="height: 70vh; overflow-y: scroll;" id="body">
+        <input id="user" placeholder="Ingresa tu nombre">    
+        <div class="back scroll pb-5" style="height: 70vh; overflow-y: scroll;">
             <div id="nodo">
                   <div id="child"></div>
             </div>
         </div>
-        
         <input id="text_chat">    
-        <p id="msg" ></p>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="../public/indexChat.js"></script>
+<script src="/indexChat.js"></script>

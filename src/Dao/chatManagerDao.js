@@ -14,6 +14,8 @@ export default class MessageManagerDao {
     }
 
     createMessage = async (msg) => {
+
+        console.log('msg: ' + msg)
         
         const {user, message} = msg;
 
@@ -25,7 +27,7 @@ export default class MessageManagerDao {
         
         const newMsg = {
             user,
-            message
+            message,
         }
 
         try {

@@ -1,4 +1,5 @@
 const socket = io();
+
 const nodo = document.querySelector('#nodo')
 const title = document.querySelector('#title')
 const price = document.querySelector('#price')
@@ -27,20 +28,22 @@ socket.on('log', products => {
         <li class="list-group-item">Precio: $ ${e.price}</li> 
         <li class="list-group-item">Descripcion: ${e.description}</li> 
         </ul>
-        `;
-        nodo.innerHTML = hijo;
+        `
     });
-    
+    nodo.innerHTML = hijo;
 });
 
-
 socket.on('alerta', (data) => { 
-    switch (data) {
+    console.log(data)
+    switch (data.status) {
         case 'noexiste':
             swal ( "Oops" , "Producto inexistente" ,  "error" )
             break;
         case 'exito':
             swal ( "OKEY" , "QUE PASARA" ,  "success" )
+            break;
+        case 'sindatos':
+            swal("Oops", "Datos incompletos", "error")
             break;
        }
 });

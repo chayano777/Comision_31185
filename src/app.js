@@ -54,14 +54,17 @@ io.on('connection', async socket=>{
     socket.on('add_product', async data =>{
         await managerProduct.addProduct(data);
         const products = await managerProduct.getProducts();
+        if(products.length === 0){
+           return io.emit('alerta', {status: 'sindatos'})
+        }
         io.emit('log', products);
         io.emit('alerta', {status: 'exito'})
     })
     
     socket.on('del_product', async data =>{
         const op_del = await managerProduct.deleteProduct(data.pid);
-        if(op_del.existe === false){
-            io.emit('alerta', 'noexiste')
+        if(op_del.deletedCount === 0){
+            io.emit('alerta', {status: 'noexiste'})
         } else {
             const products = await managerProduct.getProducts();
             io.emit('log', products);
@@ -69,8 +72,10 @@ io.on('connection', async socket=>{
     })
 
     socket.on('chat', async data => {
-        const result = await managerMessage.createMessage(data);
-        msgChat.push(result);
+        console.log(data)
+        await managerMessage.createMessage(data);
+        msgChat.push(data);
+        console.log(msgChat)
         io.emit('chat', msgChat);
     })
 

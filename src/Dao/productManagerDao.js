@@ -66,6 +66,7 @@ export default class ProductManagerDao{
         try {      
             
             const result = await productModel.deleteOne({pid:pid})
+            console.log(result)
             return result;
 
         } catch (error) {
