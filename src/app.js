@@ -72,10 +72,8 @@ io.on('connection', async socket=>{
     })
 
     socket.on('chat', async data => {
-        console.log(data)
         await managerMessage.createMessage(data);
         msgChat.push(data);
-        console.log(msgChat)
         io.emit('chat', msgChat);
     })
 

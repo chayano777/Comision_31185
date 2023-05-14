@@ -34,7 +34,6 @@ socket.on('log', products => {
 });
 
 socket.on('alerta', (data) => { 
-    console.log(data)
     switch (data.status) {
         case 'noexiste':
             swal ( "Oops" , "Producto inexistente" ,  "error" )
