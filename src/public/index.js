@@ -40,7 +40,7 @@ socket.on('alerta', (data) => {
             swal ( "Oops" , "Producto inexistente" ,  "error" )
             break;
         case 'exito':
-            swal ( "OKEY" , "QUE PASARA" ,  "success" )
+            swal ( "OKEY" , "Producto cargado de forma correcta" ,  "success" )
             break;
         case 'sindatos':
             swal("Oops", "Datos incompletos", "error")

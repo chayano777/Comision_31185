@@ -16,7 +16,7 @@ const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
 });
 
-const MONGO = 'mongodb+srv://marianoeiro:mariano.database.2023@ecommerce.ubyswjq.mongodb.net/?retryWrites=true&w=majority';
+const MONGO = 'mongodb+srv://marianoeiro:mariano.database.2023@cluster0.ubyswjq.mongodb.net/ecommerce';
 const connection = mongoose.connect(MONGO)
 
 
