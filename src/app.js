@@ -17,7 +17,7 @@ const server = app.listen(PORT, ()=>{
 });
 
 const MONGO = 'mongodb+srv://marianoeiro:mariano.database.2023@cluster0.ubyswjq.mongodb.net/ecommerce';
-const connection = mongoose.connect(MONGO)
+mongoose.connect(MONGO)
 
 
 const msgChat = [];

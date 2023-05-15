@@ -1,22 +1,20 @@
 import { Router } from "express";
-import CartManager from "../Dao/managers/cartManager.js";
+import CartManagerDao from "../Dao/cartManagerDao.js";
+//import CartManager from "../Dao/managers/cartManager.js";
+
 
 const router = Router();
 
-const manager = new CartManager();
+const manager = new CartManagerDao();
 
 router.get('/', async (req, res)=>{
-    const carts = await manager.getCarts();
+    const carts = await manager.getCartProd();
 
-    let limit = req.query.limit;
-
-    if(!limit) return res.send({carts});
-    let cartsLimit = carts.slice(0,limit);
-    res.send({cartsLimit});
+    res.send({carts});
 })
 
-router.get('/:cid', async (req, res)=>{
-    const cid = req.params.cid;
+router.get('/:id', async (req, res)=>{
+    const cid = req.params.id;
 
     const cart = await manager.getCartById(cid);
 
@@ -46,19 +44,19 @@ router.post('/:cid/products/:pid', async (req, res)=>{
 
     const cartProduct = await manager.addProductToCart(idCart, idProduct);
 
-        if(!cartProduct){
+        if(cartProduct.cartExist===false){
             return res.send({
                 status: 'ERROR!',
-                msg: 'Carrito inexistente'
+                msg: `el producto con el id: ${idProduct} no existe.`
             })
         } else {
-            res.send({cartProduct});
-        }
+            res.send({
+                status: success,
+                msg: `El producto con id: ${idProduct} se agrego al carrito con el id: ${idCart}`
+            });
+        };
 
 
 })
-
-
-
 
 export default router;
