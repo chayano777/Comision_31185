@@ -34,12 +34,11 @@ export default class CartManagerDao {
             
             "products": []
         }
-        console.log(cartProduct);
         try {
 
             const result = await cartModel.create(cartProduct);
-            console.log(result)
             return result;
+
         } catch (error) {
             console.log(error)
         }
@@ -49,20 +48,13 @@ export default class CartManagerDao {
             const cartProd = await this.getCartProdById(cid);
             const prod = await manager.getProductById(pid);
 
-            if(!cartProd){
-                return {cartExist: false}
-            }
-
-            if(!prod){
-                return {prodExist: false}
-            }
-
+          
             const productFilter = cartProd.products.find(e=>e.id===pid);
 
             if(!productFilter || productFilter.id != pid ){
 
                 cartProd.products.push({
-                    product: prodExist._id,
+                    product: prod.pid,
                     quantity: 1
             })
             } else {
