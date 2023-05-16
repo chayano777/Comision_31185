@@ -52,8 +52,10 @@ io.on('connection', async socket=>{
     })*/
     
     socket.on('add_product', async data =>{
+        console.log(data)
         await managerProduct.addProduct(data);
         const products = await managerProduct.getProducts();
+        console.log(products)
         if(products.length === 0){
            return io.emit('alerta', {status: 'sindatos'})
         }
