@@ -51,7 +51,7 @@ router.post('/:cid/products/:pid', async (req, res)=>{
             })
         } else {
             res.send({
-                status: success,
+                status: 'success',
                 msg: `El producto con id: ${idProduct} se agrego al carrito con el id: ${idCart}`
             });
         };

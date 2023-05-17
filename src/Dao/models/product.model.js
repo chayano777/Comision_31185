@@ -3,11 +3,7 @@ import mongoose from "mongoose";
 const productCollection = 'products';
 
 const schema = new mongoose.Schema({
-    pid: {
-        type: Number,
-        require: true,
-    },
-
+  
     title: {
         type: String,
         require: true,

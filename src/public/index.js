@@ -21,8 +21,8 @@ socket.on('log', products => {
 
     products.forEach(e => {
         hijo += `
-        <ul id="${e.pid}" class="list-group mb-5"> 
-        <li class="list-group-item">ID: ${e.pid}</li>
+        <ul class="list-group mb-5"> 
+        <li class="list-group-item">ID: ${e._id}</li>
         <li class="list-group-item"><h3>${e.title}</h3></li>
         <li class="list-group-item">Codigo: ${e.code}</li>
         <li class="list-group-item">Precio: $ ${e.price}</li> 
@@ -67,7 +67,7 @@ agregar.addEventListener('click', ()=>{
 
 borrar.addEventListener('click', ()=>{
     event.preventDefault();
-    socket.emit('del_product', {
-        pid: idProd.value
-    })
+   
+    socket.emit('del_product', idProd.value)
+    
 })

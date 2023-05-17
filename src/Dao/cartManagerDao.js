@@ -48,13 +48,19 @@ export default class CartManagerDao {
             const cartProd = await this.getCartProdById(cid);
             const prod = await manager.getProductById(pid);
 
+            if(!cartProd){
+                return {
+                    cartExist: false,
+                    msg: `El carrito con id: ${cid} no existe.`
+                }
+            }
           
-            const productFilter = cartProd.products.find(e=>e.id===pid);
+            const productFilter = cartProd.products.find(e=>e.prod._id.toString()===pid);
 
-            if(!productFilter || productFilter.id != pid ){
+            if(!productFilter){
 
                 cartProd.products.push({
-                    product: prod.pid,
+                    product: prod._id,
                     quantity: 1
             })
             } else {

@@ -16,7 +16,7 @@ export default class ProductManagerDao{
     getProductById = async (pid) =>{
         try {
             
-            const product = await productModel.findOne({pid:pid})
+            const product = await productModel.findOne({_id:pid})
             return product;
 
         } catch (error) {
@@ -42,14 +42,7 @@ export default class ProductManagerDao{
             stock,
             category,
             thumbnail,
-            status: status  
-        }
-
-        const products = await this.getProducts(); 
-        if(products.length === 0 ){
-            newProduct.pid = 1;
-        } else {
-            newProduct.pid = products[products.length -1 ].pid + 1;
+            status: status || true  
         }
 
         try {
@@ -61,12 +54,12 @@ export default class ProductManagerDao{
         }
     }
 
-    deleteProduct = async (pid) =>{
+    deleteProduct = async (id) =>{
+
+        console.log(id)
 
         try {      
-            
-            const result = await productModel.deleteOne({pid:pid})
-            console.log(result)
+            const result = await productModel.deleteOne({_id:id})
             return result;
 
         } catch (error) {
@@ -78,7 +71,7 @@ export default class ProductManagerDao{
 
         try {
             
-            const result = await productModel.updateOne({pid:pid}, {$set: updateProduct})
+            const result = await productModel.updateOne({_id:pid}, {$set: updateProduct})
             return result;
             
         } catch (error) {
