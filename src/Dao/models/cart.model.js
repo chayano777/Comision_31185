@@ -6,10 +6,7 @@ const schema = new mongoose.Schema({
 
     products: [{
         
-        pid: {
-            type: Number,
-            require: true    
-        },
+        
         
         quantity: {
             type: Number,

@@ -5,12 +5,20 @@ export default class ProductManagerDao{
     //metodos
 
     getProducts = async () =>{
-        try {
+        /*try {
             const products = await productModel.find().lean();
             return products;
         } catch (error) {
             console.log(error);
-        }        
+        }*/
+        
+        try {
+            
+            
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     getProductById = async (pid) =>{
