@@ -5,15 +5,20 @@ export default class ProductManagerDao{
     //metodos
 
     getProducts = async () =>{
-        /*try {
-            const products = await productModel.find().lean();
-            return products;
-        } catch (error) {
-            console.log(error);
-        }*/
         
         try {
             
+            const {docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPage } = await productModel.paginate({},{limit:3, page:1, lean:true })
+
+            const products = docs;
+            return {
+                products,
+                hasPrevPage, 
+                hasNextPage, 
+                nextPage, 
+                prevPage, 
+                totalPage
+            };
             
 
         } catch (error) {
@@ -65,7 +70,6 @@ export default class ProductManagerDao{
     deleteProduct = async (id) =>{
 
         console.log(id)
-
         try {      
             const result = await productModel.deleteOne({_id:id})
             return result;

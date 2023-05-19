@@ -16,10 +16,10 @@ const estatus = document.querySelector('#status');
 const form = document.querySelector('#primeForm')
 
 socket.on('log', products => {
-    
+
     let hijo = '';
 
-    products.forEach(e => {
+    products.products.forEach(e => {
         hijo += `
         <ul class="list-group mb-5"> 
         <li class="list-group-item">ID: ${e._id}</li>
@@ -48,8 +48,8 @@ socket.on('alerta', (data) => {
 });
 
 
-agregar.addEventListener('click', ()=>{
-    event.preventDefault();
+agregar.addEventListener('click', (e)=>{
+    e.preventDefault();
     socket.emit('add_product', {
         title: title.value,
         price: price.value,
@@ -65,9 +65,10 @@ agregar.addEventListener('click', ()=>{
 });
 
 
-borrar.addEventListener('click', ()=>{
-    event.preventDefault();
+borrar.addEventListener('click', (e)=>{
+    e.preventDefault();
    
-    socket.emit('del_product', idProd.value)
-    
+    console.log(idProd.value)
+    socket.emit('del_product', idProd.value.toString())
+
 })

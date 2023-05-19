@@ -63,8 +63,6 @@ io.on('connection', async socket=>{
     
     socket.on('del_product', async data =>{
         const op_del = await managerProduct.deleteProduct(data);
-        console.log(op_del)
-        
         if(!op_del){
             io.emit('alerta', {status: 'noexiste'})
         } else {
