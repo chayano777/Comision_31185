@@ -68,6 +68,7 @@ io.on('connection', async socket=>{
         } else {
             const products = await managerProduct.getProducts();
             io.emit('log', products);
+            io.emit('alerta', {status: 'deleteok'})
         }
     })
 

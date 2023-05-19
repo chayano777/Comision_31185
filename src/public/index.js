@@ -14,6 +14,7 @@ const idProd = document.querySelector('#id')
 const hijo = document.querySelector('#hijo')
 const estatus = document.querySelector('#status');
 const form = document.querySelector('#primeForm')
+const secondForm = document.querySelector('#secondForm')
 
 socket.on('log', products => {
 
@@ -38,6 +39,9 @@ socket.on('alerta', (data) => {
         case 'noexiste':
             swal ( "Oops" , "Producto inexistente" ,  "error" )
             break;
+        case 'deleteok':
+            swal ( "OKEY" , "Producto eliminado satisfactoriamente!!!" ,  "success" )
+            break;    
         case 'exito':
             swal ( "OKEY" , "Producto cargado de forma correcta" ,  "success" )
             break;
@@ -69,6 +73,7 @@ borrar.addEventListener('click', (e)=>{
     e.preventDefault();
    
     console.log(idProd.value)
-    socket.emit('del_product', idProd.value.toString())
+    socket.emit('del_product', idProd.value)
 
+    secondForm.reset();
 })

@@ -5,19 +5,20 @@ export default class ProductManagerDao{
     //metodos
 
     getProducts = async () =>{
-        
+        //query, limit, sort, page
         try {
             
-            const {docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPage } = await productModel.paginate({},{limit:3, page:1, lean:true })
+            const {docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages, page} = await productModel.paginate({},{limit:4, page:1, lean:true })
 
             const products = docs;
             return {
                 products,
+                prevPage,
+                nextPage,
+                page,
+                totalPages,
                 hasPrevPage, 
-                hasNextPage, 
-                nextPage, 
-                prevPage, 
-                totalPage
+                hasNextPage,
             };
             
 
@@ -27,8 +28,7 @@ export default class ProductManagerDao{
     }
 
     getProductById = async (pid) =>{
-        try {
-            
+        try {  
             const product = await productModel.findOne({_id:pid})
             return product;
 
