@@ -5,11 +5,20 @@ import ProductManagerDao from "../Dao/productManagerDao.js";
 const router = Router();
 const manager = new ProductManagerDao();
 
+
+router.get('/', async (req, res)=>{
+
+    const products = await manager.getProducts();
+
+    res.send({products})
+})
+
+/*
 router.get('/', async (req, res)=>{
     const products = await manager.getProducts();
 
     res.send({products});
-})
+})*/
 
 router.get('/:pid', async (req, res)=>{
     let id = req.params.pid;

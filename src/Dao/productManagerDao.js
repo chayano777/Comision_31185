@@ -5,17 +5,19 @@ export default class ProductManagerDao{
     //metodos
 
     getProducts = async () =>{
-        //query, limit, sort, page
+        
         try {
             
-            const {docs, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages, page} = await productModel.paginate({},{limit:4, page:1, lean:true })
+
+            const {docs, page, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages, sort} = await productModel.paginate({},{limit:10, page:1, sort:{price:1}, lean:true})
 
             const products = docs;
+
             return {
                 products,
+                page,
                 prevPage,
                 nextPage,
-                page,
                 totalPages,
                 hasPrevPage, 
                 hasNextPage,

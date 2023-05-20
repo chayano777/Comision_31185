@@ -8,12 +8,11 @@ const manager = new ProductManagerDao();
 
 
 router.get('/', async (req, res)=>{
-    
+                          
+
     const products = await manager.getProducts()
 
-    res.render('home', {
-        products
-    });
+    res.render('home', products );
 })
 
 router.get('/realTimeProducts', (req, res)=>{
