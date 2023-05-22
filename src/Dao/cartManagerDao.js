@@ -1,4 +1,5 @@
 import cartModel from './models/cart.model.js';
+import productModel from './models/product.model.js';
 import ProductManagerDao from './productManagerDao.js';
 
 const manager = new ProductManagerDao();
@@ -18,10 +19,11 @@ export default class CartManagerDao {
     }
 
     getCartProdById = async (cid)=> {
+
         try {
             
             const result = await cartModel.findOne({_id:cid});
-            return result;
+            return result
 
         } catch (error) {
             console.log(error)
@@ -55,7 +57,7 @@ export default class CartManagerDao {
                 }
             }
           
-            const productFilter = cartProd.products.find(e=>e.prod._id.toString()===pid);
+            const productFilter = cartProd.products.find(e=>e.product._id.toString()===pid);
 
             if(!productFilter){
 
@@ -75,6 +77,51 @@ export default class CartManagerDao {
             
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    updateCart = async (cid, updateProduct) => {
+
+        const cartProd = await this.getCartProdById(cid);
+
+        updateProduct.forEach(async (e) => {
+            cartProd.updateProduct.push(e);
+        });
+
+        try {
+            
+            const result = await productModel.updateOne({_id:cid}, updateProduct)
+            return result;
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    deleteAllProductOnCart = async (cid) =>{
+
+        const prodCart = await this.getCartProdById(cid)
+
+        const prods = prodCart.products.length;
+
+        if(prods > 0){
+            const result = await cartModel.updateOne({_id:cid}, {$pull: {products: {}}})
+            return result
+        } 
+        }
+    
+
+    deleteProductInCart = async (cid, pid) =>{
+
+        const prodCart = await this.getCartProdById(cid)
+
+        const prod = prodCart.products.find(e=>e.product._id.toString()===pid)
+
+        if(prod){
+            const result = await cartModel.updateOne({_id:cid}, {$pull: {products: {product: pid}}})
+            return result
+        }else {
+            return console.log(`Producto: ${pid}, eliminado de forma correcta!`);       
         }
     }
 }

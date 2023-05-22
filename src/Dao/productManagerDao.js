@@ -71,7 +71,6 @@ export default class ProductManagerDao{
 
     deleteProduct = async (id) =>{
 
-        console.log(id)
         try {      
             const result = await productModel.deleteOne({_id:id})
             return result;

@@ -16,7 +16,8 @@ router.get('/', async (req, res)=>{
 router.get('/:id', async (req, res)=>{
     const cid = req.params.id;
 
-    const cart = await manager.getCartById(cid);
+    const cart = await manager.getCartProdById(cid);
+
 
     if(!cart){
         return res.send({
@@ -55,8 +56,46 @@ router.post('/:cid/products/:pid', async (req, res)=>{
                 msg: `El producto con id: ${idProduct} se agrego al carrito con el id: ${idCart}`
             });
         };
-
-
 })
+
+router.put('/:cid', (req, res)=>{
+    const idCart = req.params.cid;
+})
+
+router.put('/:cid/products/:pid', (req, res)=>{
+    const idCart = req.params.cid;
+    const idProduct = req.body;
+    
+    
+})
+
+router.delete('/:cid', async (req, res)=>{
+
+    const idCart = req.params.cid;
+
+    console.log(idCart)
+
+    await manager.deleteAllProductOnCart(idCart)
+
+    res.send({
+        status: 'Success',
+        msg: `Se eliminaron todos los productos pertenecientes al Carrito: ${idCart}`
+    })
+})
+
+router.delete('/:cid/product/:pid', async (req, res)=>{
+    
+    const idCart = req.params.cid;
+    const idProd = req.params.pid
+
+    await manager.deleteProductInCart(idCart, idProd)
+
+    return res.send({
+        status: 'Success',
+        msg: `El producto: ${idProd}, fue eliminado de forma correcta!`
+    })
+})
+
+
 
 export default router;
