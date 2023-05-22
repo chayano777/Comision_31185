@@ -62,10 +62,17 @@ router.put('/:cid', (req, res)=>{
     const idCart = req.params.cid;
 })
 
-router.put('/:cid/products/:pid', (req, res)=>{
+router.put('/:cid/products/:pid', async (req, res)=>{
     const idCart = req.params.cid;
-    const idProduct = req.body;
+    const idProduct = req.params.pid;
+    const qty = req.query.qty
+
+    await manager.updateCartQty(idCart,idProduct,qty);
     
+    return res.send({
+        status: 'Success',
+        msg: `Se modifico la cantidad de productos.`
+    })
     
 })
 

@@ -10,7 +10,7 @@ export default class CartManagerDao {
 
         try {
 
-            const result = await cartModel.find().lean();
+            const result = await cartModel.find().populate('products.product').lean();
             return result;
 
         } catch (error) {
@@ -22,7 +22,7 @@ export default class CartManagerDao {
 
         try {
             
-            const result = await cartModel.findOne({_id:cid});
+            const result = await cartModel.findOne({_id:cid}).populate('products.product').lean();
             return result
 
         } catch (error) {
@@ -85,11 +85,13 @@ export default class CartManagerDao {
         
         const prod = prodCart.products.find(e=>e.product._id.toString()===pid)
 
-        try {
-            
-        } catch (error) {
-            console.log(error)
+        if(prod){
+            const result = await cartModel.updateOne({_id:cid, "products.product":pid}, {$set: {"products.$.quantity":qty}})
+            return result
+        } else {
+            return console.log("No se pudo actualizar la cantidad del producto")
         }
+        
     }
 
     deleteAllProductOnCart = async (cid) =>{
@@ -101,7 +103,9 @@ export default class CartManagerDao {
         if(prods > 0){
             const result = await cartModel.updateOne({_id:cid}, {$pull: {products: {}}})
             return result
-        } 
+        }else {
+            return console.log('No se pudieron borrar los productos de carrito.');
+        }
         }
     
 
