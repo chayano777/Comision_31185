@@ -80,21 +80,15 @@ export default class CartManagerDao {
         }
     }
 
-    updateCart = async (cid, updateProduct) => {
-
-        const cartProd = await this.getCartProdById(cid);
-
-        updateProduct.forEach(async (e) => {
-            cartProd.updateProduct.push(e);
-        });
+    updateCartQty = async (cid, pid, qty) => {
+        const prodCart = await this.getCartProdById(cid)
+        
+        const prod = prodCart.products.find(e=>e.product._id.toString()===pid)
 
         try {
             
-            const result = await productModel.updateOne({_id:cid}, updateProduct)
-            return result;
-            
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
     }
 
