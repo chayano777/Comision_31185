@@ -80,6 +80,21 @@ export default class CartManagerDao {
         }
     }
 
+    updateProduct = async (cid, prods) => {
+        const prodCart = await this.getCartProdById(cid)
+
+        prods.forEach(async (el)=>{
+            prodCart.products.push(el)
+        })
+
+        try {
+            const result = await cartModel.updateOne({_id:cid}, prodCart)
+            return result;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     updateCartQty = async (cid, pid, qty) => {
         const prodCart = await this.getCartProdById(cid)
         

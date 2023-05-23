@@ -58,8 +58,16 @@ router.post('/:cid/products/:pid', async (req, res)=>{
         };
 })
 
-router.put('/:cid', (req, res)=>{
+router.put('/:cid', async (req, res)=>{
     const idCart = req.params.cid;
+    const prod = req.body;
+
+    await manager.updateProduct(idCart, prod)
+
+    return res.send({
+            status: 'Success',
+            msg: `Se agregaron los productos de forma satisfactoria.`
+    })
 })
 
 router.put('/:cid/products/:pid', async (req, res)=>{
