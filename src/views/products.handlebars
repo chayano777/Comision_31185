@@ -1,0 +1,28 @@
+<div class="container">
+  <h1 class="text-center">Productos</h1>
+  <hr />
+
+  <div class="row justify-content-center">
+    {{#each products}}
+      <div class="col-3">
+        <ul class="list-group mb-5">
+          <li class="list-group-item"><h3>{{this.title}}</h3></li>
+          <li class="list-group-item">ID: {{this._id}}</li>
+          <li class="list-group-item">Codigo: {{this.code}}</li>
+          <li class="list-group-item">Precio: ${{this.price}}</li>
+          <li class="list-group-item">Descripcion: {{this.description}}</li>
+          <li class="list-group-item">Stock: {{this.stock}}</li>
+          <button id="add" class="btn btn-outline-info">Agregar</button>
+        </ul>
+      </div>
+    {{/each}}
+  </div>
+  <div class="text-center">
+    {{#if hasPrevPage}}
+      <a  href="/products?page={{prevPage}}"><button class="btn btn-primary">Prev</button></a>
+    {{/if}}
+    {{#if hasNextPage}}
+      <a href="/products?page={{nextPage}}"><button class="btn btn-primary">Next</button></a>
+    {{/if}}
+  </div>
+</div>

@@ -44,7 +44,7 @@ app.use('/', viewsRouter);
 io.on('connection', async socket=>{
     console.log("Conectado")
     
-    const products = await managerProduct.getProducts();
+    const products = await managerProduct.getProducts('', 3, 1, -1);
     socket.emit('log', products);
 
     /*socket.on('mensaje', data => {

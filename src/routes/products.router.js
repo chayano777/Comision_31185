@@ -7,10 +7,17 @@ const manager = new ProductManagerDao();
 
 
 router.get('/', async (req, res)=>{
+    const query = req.query.query;
+    const limit = req.query.limit || 10;
+    const page = req.query.page || 1;
+    const sort = req.query.sort;
 
-    const products = await manager.getProducts();
+    const products = await manager.getProducts(query, limit, sort, page);
 
-    res.send({products})
+    res.send({
+        status: 'Success',
+        payload: products
+    })
 })
 
 /*
