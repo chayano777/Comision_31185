@@ -1,16 +1,19 @@
 import express from 'express';
 import { Server } from 'socket.io';
+import session from 'express-session'
+import MongoStore from 'connect-mongo';
 import handlebars from "express-handlebars";
 import mongoose from 'mongoose';
 import __dirname from './utils.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
 import viewsRouter from './routes/views.router.js';
+import sessionsRouter from './routes/sessions.router.js';
 import ProductManagerDao from './Dao/productManagerDao.js';
 import MessageManagerDao from './Dao/chatManagerDao.js';
 //import ProductManager from './managers/productManager.js';
 
-const PORT = 8080;
+const PORT = 8081;
 const app = express();
 const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
@@ -34,11 +37,20 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/public'));
 
+app.use(session({
+    store: new MongoStore({
+        mongoUrl: MONGO,
+        ttl:3600
+    }),
+    secret:'WordSecret',
+    resave:false,
+    saveUninitialized:false
+}))
 
-
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
+app.use('/api/carts', cartsRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/sessions', sessionsRouter);
 
 
 io.on('connection', async socket=>{
@@ -79,6 +91,3 @@ io.on('connection', async socket=>{
     })
 
 })
-
-
-
