@@ -2,47 +2,72 @@ import { Router } from "express";
 import ProductManagerDao from "../Dao/productManagerDao.js";
 //import ProductManager from "../managers/productManager.js";
 import productModel from "../Dao/models/product.model.js";
+import CartManagerDao from "../Dao/cartManagerDao.js";
 
 const router = Router();
 const manager = new ProductManagerDao();
+const managerDao = new CartManagerDao();
 
+const publicAccess = (req, res, next) => {
+  console.log('public');
+  if (req.session.user) return res.redirect('/products');
+  next();
+};
 
-router.get('/', async (req, res)=>{
-                          
+const privateAccess = (req, res, next) => {
+  if (!req.session.user) return res.redirect('/');
+  next();
+};
 
-    const products = await manager.getProducts('', 3 , 1, -1)
+router.get('/', publicAccess, async (req, res) => {
+  res.render('login');
+});
 
-    res.render('home', products );
+router.get('/register', publicAccess, async (req, res) => {
+  res.render('register');
+});
+
+router.get('/profile', privateAccess, async (req, res) => {
+  res.render('profile', {
+    user: req.session.user
+  });
+});
+
+// router.get('/', async (req, res)=>{                      
+//     const products = await manager.getProducts('', 3 , 1, -1)
+//     res.render('products', products );
+// })
+
+router.get('/realTimeProducts', privateAccess, (req, res) => {
+
+  res.render('realTimeProducts', {})
 })
 
-router.get('/realTimeProducts', (req, res)=>{
-
-    res.render('realTimeProducts',{})
+router.get('/chat', privateAccess, (req, res) => {
+  res.render('chat', {});
 })
 
-router.get('/chat', (req, res)=>{
-    res.render('chat', {});
+router.get('/products', privateAccess, async (req, res) => {
+
+  const page = req.query.page || 1;
+
+  const { products, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages } = await manager.getProducts('', 3, page, 'desc')
+
+  res.render('products',
+    {
+      products,
+      prevPage,
+      nextPage,
+      totalPages,
+      hasPrevPage,
+      hasNextPage
+    });
 })
 
-router.get('/products', async (req, res)=>{
-
-    const page = req.query.page || 1;
-
-    const {products, hasPrevPage, hasNextPage, nextPage, prevPage, totalPages} = await manager.getProducts('', 3, page, 'desc')
-     
-    res.render('products',
-       { 
-        products,
-        prevPage,
-        nextPage,
-        totalPages,
-        hasPrevPage, 
-        hasNextPage
-       });
-})
-
-
-
-
+router.get('/carts/:cid',privateAccess, async (req, res) => {
+  const result = await managerDao.getCartProdById(req.params.cid);
+  const products = result.products;
+  res.render('cartId', { products });
+});
 
 export default router;

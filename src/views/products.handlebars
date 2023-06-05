@@ -1,5 +1,6 @@
 <div class="container">
   <h1 class="text-center">Productos</h1>
+  <a  href="/profile"><button class="btn btn-primary">Perfil</button></a>
   <hr />
 
   <div class="row justify-content-center">
@@ -12,7 +13,7 @@
           <li class="list-group-item">Precio: ${{this.price}}</li>
           <li class="list-group-item">Descripcion: {{this.description}}</li>
           <li class="list-group-item">Stock: {{this.stock}}</li>
-          <button id="add" class="btn btn-outline-info">Agregar</button>
+          <button id="{{this._id}}" name="btnAdd" class="btn btn-outline-info">Agregar</button>
         </ul>
       </div>
     {{/each}}
@@ -26,3 +27,5 @@
     {{/if}}
   </div>
 </div>
+
+<script src="/products.js"></script>

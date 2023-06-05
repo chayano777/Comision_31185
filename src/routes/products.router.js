@@ -52,8 +52,6 @@ router.put('/:pid', async (req, res)=>{
 
    const updateProduct = await manager.updateProduct(id, reqProduct);
 
-
-
    return res.send({
         updateProduct
    });
