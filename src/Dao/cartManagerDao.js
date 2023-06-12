@@ -20,8 +20,7 @@ export default class CartManagerDao {
 
     getCartProdById = async (cid)=> {
 
-        try {
-            
+        try {  
             const result = await cartModel.findOne({_id:cid}).populate('products.product').lean();
             return result
 

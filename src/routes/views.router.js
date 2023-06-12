@@ -1,7 +1,5 @@
 import { Router } from "express";
 import ProductManagerDao from "../Dao/productManagerDao.js";
-//import ProductManager from "../managers/productManager.js";
-import productModel from "../Dao/models/product.model.js";
 import CartManagerDao from "../Dao/cartManagerDao.js";
 
 const router = Router();
@@ -25,6 +23,10 @@ router.get('/', publicAccess, async (req, res) => {
 
 router.get('/register', publicAccess, async (req, res) => {
   res.render('register');
+});
+
+router.get('/resetPassword', publicAccess, async (req, res) => {
+  res.render('resetPassword');
 });
 
 router.get('/profile', privateAccess, async (req, res) => {

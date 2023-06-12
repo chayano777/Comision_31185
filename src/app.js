@@ -4,6 +4,8 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo';
 import handlebars from "express-handlebars";
 import mongoose from 'mongoose';
+import passport from 'passport';
+
 import __dirname from './utils.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/carts.router.js';
@@ -11,9 +13,9 @@ import viewsRouter from './routes/views.router.js';
 import sessionsRouter from './routes/sessions.router.js';
 import ProductManagerDao from './Dao/productManagerDao.js';
 import MessageManagerDao from './Dao/chatManagerDao.js';
-//import ProductManager from './managers/productManager.js';
+import initializePassport from './config/passport.config.js';
 
-const PORT = 8080;
+const PORT = 8081;
 const app = express();
 const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);
@@ -47,12 +49,17 @@ app.use(session({
     saveUninitialized:false
 }))
 
+// Passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/', viewsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/sessions', sessionsRouter);
 
-
+// Chat con Socket
 io.on('connection', async socket=>{
     console.log("Conectado")
     

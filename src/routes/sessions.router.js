@@ -1,53 +1,54 @@
 import { Router } from 'express';
+import passport from 'passport';
 import userModel from '../Dao/models/user.model.js';
+import { createHash, validatePassword } from '../utils.js';
 
 const router = Router();
 
-router.post('/register', async (req, res) => {
-   const { first_name, last_name, email, age, password } = req.body;
-   const exist = await userModel.findOne({ email });
+router.post('/register', passport.authenticate('register', {failureRedirect: '/failregister'}), async (req, res) => {
+   res.send({ status: "succes", msg: "Usuario registrado" });
+});
 
-   if (exist) {
-      return res.status(400).send({ status: "error", error: "El ususario ya existe" })
-   }
+router.get('/failregister', async (req,res) => {
+   console.log('Fallo en el registro');
+   res.send({ status: "ERROR", msg: "Error en el registro" });
+});
 
-   const user = {
-      first_name,
-      last_name,
-      email,
-      age,
-      password
-   }
 
-   const result = await userModel.create(user);
-   res.send({ status: "success", msg: "Usuario registrado" })
-
-})
-
-router.post('/login', async (req, res) => {
-   const { email, password } = req.body;
-   const user = await userModel.findOne({ email, password });
+router.post('/login', passport.authenticate('login', {failureRedirect: '/faillogin'}), async (req, res) => {
    
-   if (!user) {
-      return res.status(400).send({ status: "error", error: "Datos incorretos" })
+   if(!req.user) return res.status(401).send({status: "ERROR", msg:"Credenciales invalidas"});
+
+   req.session.user ={
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      email: req.user.email,
+      age: req.user.age,
+      cartId: req.user.cartId,
+      rol: req.user.rol
    }
    
-   req.session.user = {
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      age: user.age
-   }
-   
-   console.log(req.session.user);
-   res.send({ status: "success", payload: req.res.user, msg: "Usuario logueado con exito" });
-})
+   res.send({ status: "success", payload: req.user, message: "Usuario logueado" })
+});
 
-router.get('/logout', (req,res)=>{
-   req.session.destroy(err =>{
-       if(err) return res.status(500).send({status:"error", error:"No pudo cerrar sesion"})
-       res.redirect('/');
+router.get('/logout', (req, res) => {
+   req.session.destroy(err => {
+      if (err) return res.status(500).send({ status: "error", error: "No pudo cerrar sesion" })
+      res.redirect('/');
    })
 })
+
+router.post('/resetPassword', async (req, res) => {
+   const { email, password } = req.body;
+
+   if (!email || !password) return res.status(400).send({ status: "error", msg: "Datos incorrectos" });
+   const user = await userModel.findOne({ email });
+   if (!user) return res.status(400).send({ status: "error", msg: "Datos incorrectos" });
+
+   const newHashedPassword = createHash(password);
+   await userModel.updateOne({ _id: user.id }, { $set: { password: newHashedPassword } });
+
+   res.send({ status: "success", msg: "Contraseña actualizada" });
+});
 
 export default router;

@@ -1,21 +1,23 @@
-const form = document.getElementById('formRegister');
+const form = document.getElementById('formReset');
 
 form.addEventListener('submit', e => {
    e.preventDefault();
 
    const data = new FormData(form);
+
    const obj = {};
 
    data.forEach((value, key) => obj[key] = value);
 
-   fetch('/api/sessions/register', {
+   fetch('/api/sessions/resetPassword', {
       method: 'POST',
       body: JSON.stringify(obj),
-      headers: {
+      headers:{
          'Content-Type': 'application/json'
       }
-   }).then(result => result.json()).then(json => {
-      alert('Usuario registrado con exito')
-      console.log(json);
-   });
+   }).then(result => {
+      if(result.status == 200){
+         window.location.replace('/')
+      }
+   })
 })
