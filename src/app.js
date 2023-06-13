@@ -15,7 +15,7 @@ import ProductManagerDao from './Dao/productManagerDao.js';
 import MessageManagerDao from './Dao/chatManagerDao.js';
 import initializePassport from './config/passport.config.js';
 
-const PORT = 8081;
+const PORT = 8080;
 const app = express();
 const server = app.listen(PORT, ()=>{
     console.log(`Servidor UP! en Puerto: ${PORT}`);

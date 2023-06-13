@@ -7,7 +7,7 @@ const manager = new ProductManagerDao();
 const managerDao = new CartManagerDao();
 
 const publicAccess = (req, res, next) => {
-  console.log('public');
+  //console.log('public');
   if (req.session.user) return res.redirect('/products');
   next();
 };
