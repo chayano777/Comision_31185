@@ -62,7 +62,8 @@ router.get('/products', privateAccess, async (req, res) => {
       nextPage,
       totalPages,
       hasPrevPage,
-      hasNextPage
+      hasNextPage,
+      user: req.session.user
     });
 })
 
